@@ -8,8 +8,8 @@ namespace SarPacker
         struct TableEntry
         {
             public string FileName;
-            public int Offset;
-            public int Length;
+            public uint Offset;
+            public uint Length;
         }
 
         struct SourceTargetMapEntry
@@ -42,18 +42,16 @@ namespace SarPacker
         {
             var sourceToTarget = GetSourceToTargetMap();
 
-            BinaryWriter writer = new BinaryWriter(File.OpenWrite("D:\\Sandboxie\\drive\\C\\Program Files (x86)\\Gabelstapler Simulator 2009\\data.sar"));
+            BinaryWriter writer = new BinaryWriter(File.OpenWrite(args.Length > 1 ? args[1] : "data.sar"));
             writer.Write(Encoding.ASCII.GetBytes("SARCFV"));
             writer.Write(new byte[] { 0x01, 0x01 });
 
-            var headerTableEntriesPosition = writer.BaseStream.Position;
             // es muss in den Header noch Entries & Offset geschrieben werden
-
-            int tableEntries;
-            int tableOffset;
+            var headerTableEntriesPosition = writer.BaseStream.Position;
 
             writer.Seek(8, SeekOrigin.Current);
 
+            // Data schreiben
             List<TableEntry> entries = new List<TableEntry>();
             foreach (var entry in sourceToTarget)
             {
@@ -75,14 +73,14 @@ namespace SarPacker
                 entries.Add(new TableEntry
                 {
                     FileName = entry.Target,
-                    Length = (int)length,
-                    Offset = (int)position
+                    Length = (uint) length,
+                    Offset = (uint) position
                 });
             }
 
             // file table
-            tableEntries = entries.Count;
-            tableOffset = (int)writer.BaseStream.Position;
+            int tableEntries = entries.Count;
+            int tableOffset = (int)writer.BaseStream.Position;
 
             foreach (var entry in entries)
             {
@@ -92,14 +90,14 @@ namespace SarPacker
                 writer.Write((byte) fileName.Length);
                 writer.Write(fileName);
                 writer.Write((byte) 0x00);
-                writer.Write((System.UInt32)entry.Offset);
-                writer.Write((System.UInt32) entry.Length);
-                writer.Write((System.UInt32) entry.Length); // wird iwie 2x geschrieben idk why
+                writer.Write(entry.Offset);
+                writer.Write(entry.Length);
+                writer.Write(entry.Length); // wird iwie 2x geschrieben idk why
             }
 
             writer.Seek((int) headerTableEntriesPosition, SeekOrigin.Begin);
-            writer.Write((Int32)tableEntries);
-            writer.Write((Int32)tableOffset);
+            writer.Write(tableEntries);
+            writer.Write(tableOffset);
 
             writer.Close();
         }
