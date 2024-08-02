@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SarExtract", "SarExtract\SarExtract.csproj", "{3F5E8906-EDE9-41DE-9CAD-0F343B201ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SarExtract", "SarExtract\SarExtract.csproj", "{3F5E8906-EDE9-41DE-9CAD-0F343B201ADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SarPacker", "SarPacker\SarPacker.csproj", "{9AE692EE-D2FB-467B-B0FD-D99E6A1B6BFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SarPacker", "SarPacker\SarPacker.csproj", "{9AE692EE-D2FB-467B-B0FD-D99E6A1B6BFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A36B5FBB-FBD1-449A-83DF-B7BE5BB411EC}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
